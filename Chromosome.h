@@ -3,12 +3,12 @@
 
 #include <string>
 
-#define CHROMOSOME_LEN 40
-
+class GeneticAlgo;
 class Chromosome {
     private:
         std::string m_bits;
         double m_fitness;
+        GeneticAlgo* m_ga;
 
 
     public:
@@ -16,6 +16,8 @@ class Chromosome {
         Chromosome(std::string bits, double fitness);
         void setToRandom();
         void printBits();
+        void setGA(GeneticAlgo* ga);
+        void calcFitness();
 
 };
 

@@ -1,8 +1,8 @@
 main:
-	g++ -std=c++11 Chromosome.cpp GeneticAlgo.cpp main.cpp -o main
+	g++ -std=c++11 Chromosome.cpp GeneticAlgo.cpp main.cpp -o ga
 
 clean:
-	rm main
+	rm ga
 
 run:
-	./main
+	./ga
