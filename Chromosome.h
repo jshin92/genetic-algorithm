@@ -10,7 +10,6 @@ class Chromosome {
         double m_fitness;
         GeneticAlgo* m_ga;
 
-
     public:
         Chromosome();
         Chromosome(std::string bits, double fitness);
@@ -18,7 +17,7 @@ class Chromosome {
         void printBits();
         void setGA(GeneticAlgo* ga);
         void calcFitness();
-
+        void mutate();
 };
 
 

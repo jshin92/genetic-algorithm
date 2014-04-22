@@ -6,3 +6,6 @@ clean:
 
 run:
 	./ga
+
+go:
+	make clean && make && make run

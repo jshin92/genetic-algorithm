@@ -36,5 +36,6 @@ void GeneticAlgo::run() {
         c.setToRandom();
         c.printBits();
         c.calcFitness();
+        c.mutate();
     }
 }

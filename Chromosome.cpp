@@ -7,6 +7,9 @@
 #define TARGET 20
 #define CHROMOSOME_LEN 40
 #define GENE_LEN 4
+#define CROSSOVER_RATE 70 // percentage (e.g. * 100)
+#define MUTATION_RATE 1 // percentage
+
 using namespace std;
 
 Chromosome::Chromosome() {
@@ -97,6 +100,20 @@ void Chromosome::calcFitness() {
     
 }
 
+char inverted(char c) {
+    return c == '0' ? '1' : '0';
+}
+
+void Chromosome::mutate() {
+    for (int i = 0; i < CHROMOSOME_LEN; i++) {
+        int x = rand() % 100 + 1;
+        if (x <= MUTATION_RATE) {
+            cout << "mutated a gene" << endl;
+            m_bits[i] = inverted(m_bits[i]);
+        }
+            
+    }
+}
 
 
 
