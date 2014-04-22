@@ -7,6 +7,7 @@
 using namespace std;
 
 GeneticAlgo::GeneticAlgo() {  
+    done = false;
     mapping = map<string, string>();
     mapping["0000"] = "0";
     mapping["0001"] = "1";
@@ -28,7 +29,6 @@ GeneticAlgo::GeneticAlgo() {
 void GeneticAlgo::run() {
     cout << "Running..." << endl;
 
-    bool done = false;
     Chromosome c_arr[POP_SIZE];
 
     for (Chromosome c : c_arr) {
