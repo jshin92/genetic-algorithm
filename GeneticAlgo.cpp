@@ -3,15 +3,18 @@
 #include <iostream>
 #include <string>
 
-
+#define GIVE_UP_THRESHOLD 400
 #define POP_SIZE 1
+
+#include <array>
 
 using namespace std;
 
 void GeneticAlgo::run() {
     cout << "Running..." << endl;
 
-    Chromosome c_arr[POP_SIZE];
+    array<Chromosome, POP_SIZE> c_arr;
+    //Chromosome c_arr[POP_SIZE];
     int generationCount = 0;
     // initialize chromosomes with random genes
     for (auto& c : c_arr) {
@@ -27,9 +30,44 @@ void GeneticAlgo::run() {
         for (auto& c : c_arr) {
             c.calcFitness();            
             totalFitness += c.getFitness();
+
+            if (c.getFitness() == 9999) {
+                cout << "Solution found in " << generationCount << 
+                " generations." << endl;
+                c.printBits();
+                done = true;
+                break;
+            }
         }
 
-        
+        if (done) break;
+
+        array<Chromosome, POP_SIZE> nextGen;
+        int newGenCount = 0;
+
+        // keep going until we made POP_SIZE more children
+        while (newGenCount < POP_SIZE) {
+            // choose two parents to crossover
+            /// child1 <- rouletteSelect
+            /// child2 <- rouletteSelect
+
+            /// crossover(child1, child2)
+            /// mutate(child1)
+            /// mutate(child2)
+
+            /// nextGen[newGenCount++] = Chromosome(child1);
+            /// nextGen[newGenCount++] = Chromosome(child2);
+        }
+
+        // the next generation becomes the new current generation in the next iteration
+        c_arr = nextGen; 
+
+        generationCount++;
+
+        if (generationCount > GIVE_UP_THRESHOLD) {
+            cout << "No solutions, taking too many iterations..." << endl;
+            done = true;
+        }
 
     }
 }
