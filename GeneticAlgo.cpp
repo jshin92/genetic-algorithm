@@ -14,7 +14,6 @@ void GeneticAlgo::run() {
     cout << "Running..." << endl;
 
     array<Chromosome, POP_SIZE> c_arr;
-    //Chromosome c_arr[POP_SIZE];
     int generationCount = 0;
     // initialize chromosomes with random genes
     for (auto& c : c_arr) {

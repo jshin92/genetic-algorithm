@@ -15,7 +15,7 @@ Chromosome::Chromosome() {
     m_fitness = 0.0;
 }
 
-Chromosome::Chromosome(std::string bits, double fitness=0.0) {
+Chromosome::Chromosome(const std::string& bits, double fitness=0.0) {
     m_bits = bits;
     m_fitness = fitness;
 }

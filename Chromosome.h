@@ -13,7 +13,7 @@ class Chromosome {
 
     public:
         Chromosome();
-        Chromosome(std::string bits, double fitness);
+        Chromosome(const std::string& bits, double fitness);
         void getRandomBits();
         void printBits();
         void setGeneticAlgo(GeneticAlgo* ga);
