@@ -19,6 +19,7 @@ class Chromosome {
         void setGeneticAlgo(GeneticAlgo* ga);
         void calcFitness();
         void mutate();
+        static void crossover(Chromosome& child1, Chromosome& child2);
         double getFitness();
 };
 

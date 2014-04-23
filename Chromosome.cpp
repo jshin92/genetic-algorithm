@@ -102,6 +102,15 @@ char inverted(char c) {
     return c == '0' ? '1' : '0';
 }
 
+void Chromosome::crossover(Chromosome& child1, Chromosome& child2) {
+    int crossChance = rand() % 100;
+    if (crossChance < CROSSOVER_RATE) {
+        int x = rand() % CHROMOSOME_LEN;
+        child1.m_bits = child1.m_bits.substr(0, x) + child2.m_bits.substr(x + 1);
+        child2.m_bits = child2.m_bits.substr(0, x) + child1.m_bits.substr(x + 1);
+    }
+}
+
 void Chromosome::mutate() {
     for (int i = 0; i < CHROMOSOME_LEN; i++) {
         int x = rand() % 100 + 1;

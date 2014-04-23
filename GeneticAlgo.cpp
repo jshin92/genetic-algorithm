@@ -31,13 +31,13 @@ void GeneticAlgo::run() {
             totalFitness += c.getFitness();
 
             if (c.getFitness() == 9999) {
-                cout << "Solution found in " << generationCount << 
-                " generations." << endl;
+                cout << "Solution found in " << generationCount << " generations." << endl;
                 c.printBits();
                 done = true;
                 break;
             }
         }
+
 
         if (done) break;
 
