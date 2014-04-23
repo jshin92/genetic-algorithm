@@ -1,10 +1,38 @@
 #include "GeneticAlgo.h"
 #include "Chromosome.h"
 #include <iostream>
+#include <string>
+
 
 #define POP_SIZE 1
 
 using namespace std;
+
+void GeneticAlgo::run() {
+    cout << "Running..." << endl;
+
+    Chromosome c_arr[POP_SIZE];
+    int generationCount = 0;
+    // initialize chromosomes with random genes
+    for (auto& c : c_arr) {
+        c.setGeneticAlgo(this);
+        c.getRandomBits();
+        c.printBits();
+    }
+    
+    while (!done) {
+        done = true;
+       
+       double totalFitness = 0.0;
+        for (auto& c : c_arr) {
+            c.calcFitness();            
+            totalFitness += c.getFitness();
+        }
+
+        
+
+    }
+}
 
 GeneticAlgo::GeneticAlgo() {  
     done = false;
@@ -26,16 +54,4 @@ GeneticAlgo::GeneticAlgo() {
     // 1110 and 1111 are unused & ignored 
 }
 
-void GeneticAlgo::run() {
-    cout << "Running..." << endl;
 
-    Chromosome c_arr[POP_SIZE];
-
-    for (Chromosome c : c_arr) {
-        c.setGA(this);
-        c.setToRandom();
-        c.printBits();
-        c.calcFitness();
-        c.mutate();
-    }
-}

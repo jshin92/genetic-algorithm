@@ -1,6 +1,7 @@
 #ifndef CHROMOSOME_H
 #define CHROMOSOME_H
 
+#define CHROMOSOME_LEN 40
 #include <string>
 
 class GeneticAlgo;
@@ -12,12 +13,12 @@ class Chromosome {
 
     public:
         Chromosome();
-        Chromosome(std::string bits, double fitness);
-        void setToRandom();
+        void getRandomBits();
         void printBits();
-        void setGA(GeneticAlgo* ga);
+        void setGeneticAlgo(GeneticAlgo* ga);
         void calcFitness();
         void mutate();
+        double getFitness();
 };
 
 

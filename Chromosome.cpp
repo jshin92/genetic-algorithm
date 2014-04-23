@@ -1,11 +1,9 @@
 #include "Chromosome.h"
 #include "GeneticAlgo.h"
 #include <iostream>
-#include <stdlib.h>
 #include <cmath>
 
 #define TARGET 20
-#define CHROMOSOME_LEN 40
 #define GENE_LEN 4
 #define CROSSOVER_RATE 70 // percentage (e.g. * 100)
 #define MUTATION_RATE 1 // percentage
@@ -17,16 +15,11 @@ Chromosome::Chromosome() {
     m_fitness = 0.0;
 }
 
-Chromosome::Chromosome(string bits, double fitness) {
-    m_bits = bits;
-    m_fitness = fitness;
-}
-
-void Chromosome::setGA(GeneticAlgo* ga) {
+void Chromosome::setGeneticAlgo(GeneticAlgo* ga) {
     m_ga = ga;
 }
 
-void Chromosome::setToRandom() {
+void Chromosome::getRandomBits() {
     for (int i = 0; i < CHROMOSOME_LEN; i++) {
         int x = rand() % 2;
         m_bits += to_string(x);
@@ -58,7 +51,6 @@ void Chromosome::calcFitness() {
     while (index < CHROMOSOME_LEN) {
         string curString = m_bits.substr(index, GENE_LEN);
         string curElem = m_ga->mapping[curString];
-        cout << "CUR_ELEM: " << curElem << endl;
         if (curElem == "") {
             index += GENE_LEN;
             continue;
@@ -72,6 +64,7 @@ void Chromosome::calcFitness() {
                 else if (prevOp == "/") {
                     // disallow division by zero
                     if (curNum == 0) {
+                        cout << "skipping division by zero" << endl;
                         index += GENE_LEN;
                         continue;
                     }
@@ -86,7 +79,7 @@ void Chromosome::calcFitness() {
                 expectingNumber = true;
             }
         }
-
+    
         index += GENE_LEN;
     }
 
@@ -113,6 +106,10 @@ void Chromosome::mutate() {
         }
             
     }
+}
+
+double Chromosome::getFitness() {
+    return m_fitness;
 }
 
 
