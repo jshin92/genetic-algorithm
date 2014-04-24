@@ -13,13 +13,14 @@ class Chromosome {
 
     public:
         Chromosome();
-        Chromosome(const std::string& bits, double fitness);
+        Chromosome(std::string& bits, double fitness=0.0);
         void getRandomBits();
         void printBits();
         void setGeneticAlgo(GeneticAlgo* ga);
         void calcFitness();
-        void mutate();
-        static void crossover(Chromosome& child1, Chromosome& child2);
+        static void mutate(std::string& child);
+        static void crossover(std::string& child1, std::string& child2);
+        static std::string rouletteSelect(double totalFitness, Chromosome c_arr[], int len);
         double getFitness();
 };
 

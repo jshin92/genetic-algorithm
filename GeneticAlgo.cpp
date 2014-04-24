@@ -23,11 +23,11 @@ void GeneticAlgo::run() {
     }
     
     while (!done) {
-        done = true;
-       
-       double totalFitness = 0.0;
+        double totalFitness = 0.0;
         for (auto& c : c_arr) {
+            cout << "YOO" << endl;
             c.calcFitness();            
+            cout << "nope " << endl;
             totalFitness += c.getFitness();
 
             if (c.getFitness() == 9999) {
@@ -38,7 +38,6 @@ void GeneticAlgo::run() {
             }
         }
 
-
         if (done) break;
 
         array<Chromosome, POP_SIZE> nextGen;
@@ -47,17 +46,16 @@ void GeneticAlgo::run() {
         // keep going until we made POP_SIZE more children
         while (newGenCount < POP_SIZE) {
             // choose two parents to crossover
-            /// child1 <- rouletteSelect
-            /// child2 <- rouletteSelect
+            string child1 = Chromosome::rouletteSelect(totalFitness, c_arr.data(), POP_SIZE);
+            string child2 = Chromosome::rouletteSelect(totalFitness, c_arr.data(), POP_SIZE);
+            
+            Chromosome::crossover(child1, child2);
+            Chromosome::mutate(child1);
+            Chromosome::mutate(child2);
 
-            /// crossover(child1, child2)
-            /// mutate(child1)
-            /// mutate(child2)
-
-            /// nextGen[newGenCount++] = Chromosome(child1);
-            /// nextGen[newGenCount++] = Chromosome(child2);
+            nextGen[newGenCount++] = Chromosome(child1);
+            nextGen[newGenCount++] = Chromosome(child2);
         }
-
         // the next generation becomes the new current generation in the next iteration
         c_arr = nextGen; 
 

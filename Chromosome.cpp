@@ -15,7 +15,7 @@ Chromosome::Chromosome() {
     m_fitness = 0.0;
 }
 
-Chromosome::Chromosome(const std::string& bits, double fitness=0.0) {
+Chromosome::Chromosome(std::string& bits, double fitness) {
     m_bits = bits;
     m_fitness = fitness;
 }
@@ -102,21 +102,23 @@ char inverted(char c) {
     return c == '0' ? '1' : '0';
 }
 
-void Chromosome::crossover(Chromosome& child1, Chromosome& child2) {
+void Chromosome::crossover(string& child1, string& child2) {
     int crossChance = rand() % 100;
+    crossChance = 100;
     if (crossChance < CROSSOVER_RATE) {
         int x = rand() % CHROMOSOME_LEN;
-        child1.m_bits = child1.m_bits.substr(0, x) + child2.m_bits.substr(x + 1);
-        child2.m_bits = child2.m_bits.substr(0, x) + child1.m_bits.substr(x + 1);
+        child1 = child1.substr(0, x) + child2.substr(x + 1);
+        child2 = child2.substr(0, x) + child1.substr(x + 1);
     }
 }
 
-void Chromosome::mutate() {
+
+void Chromosome::mutate(string& child) {
     for (int i = 0; i < CHROMOSOME_LEN; i++) {
         int x = rand() % 100 + 1;
         if (x <= MUTATION_RATE) {
             cout << "mutated a gene" << endl;
-            m_bits[i] = inverted(m_bits[i]);
+            child[i] = inverted(child[i]);
         }
             
     }
@@ -124,6 +126,20 @@ void Chromosome::mutate() {
 
 double Chromosome::getFitness() {
     return m_fitness;
+}
+
+
+string Chromosome::rouletteSelect(double totalFitness, Chromosome c_arr[], int len) {
+    // gets  number in range [0, totalFitness)
+    double pointSelected = (rand() % ((int) (totalFitness * 100))) / 100.0;
+    double fitnessAccum = 0.0;
+    for (int i = 0; i < len; i++) {
+        fitnessAccum += c_arr[i].getFitness();
+        if (fitnessAccum >= pointSelected) 
+            return c_arr[i].m_bits;
+    }
+    cerr << "Error with roulette select, should not reach this." << endl;
+    return "";
 }
 
 
