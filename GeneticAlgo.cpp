@@ -3,8 +3,8 @@
 #include <iostream>
 #include <string>
 
-#define GIVE_UP_THRESHOLD 400
-#define POP_SIZE 1
+#define GIVE_UP_THRESHOLD 200
+#define POP_SIZE 50
 
 #include <array>
 
@@ -25,14 +25,15 @@ void GeneticAlgo::run() {
     while (!done) {
         double totalFitness = 0.0;
         for (auto& c : c_arr) {
-            cout << "YOO" << endl;
-            c.calcFitness();            
-            cout << "nope " << endl;
+            c.printBits();
+
+            c.calcFitness();
             totalFitness += c.getFitness();
 
-            if (c.getFitness() == 9999) {
+            if (c.getFitness() == PERFECT_FITNESS) {
                 cout << "Solution found in " << generationCount << " generations." << endl;
                 c.printBits();
+                c.decode();
                 done = true;
                 break;
             }
@@ -42,7 +43,6 @@ void GeneticAlgo::run() {
 
         array<Chromosome, POP_SIZE> nextGen;
         int newGenCount = 0;
-
         // keep going until we made POP_SIZE more children
         while (newGenCount < POP_SIZE) {
             // choose two parents to crossover
@@ -55,10 +55,12 @@ void GeneticAlgo::run() {
 
             nextGen[newGenCount++] = Chromosome(child1);
             nextGen[newGenCount++] = Chromosome(child2);
+            nextGen[newGenCount-2].setGeneticAlgo(this);
+            nextGen[newGenCount-1].setGeneticAlgo(this);
         }
         // the next generation becomes the new current generation in the next iteration
-        c_arr = nextGen; 
-
+        c_arr = nextGen;
+        
         generationCount++;
 
         if (generationCount > GIVE_UP_THRESHOLD) {
@@ -86,7 +88,9 @@ GeneticAlgo::GeneticAlgo() {
     mapping["1011"] = "-";
     mapping["1100"] = "*";
     mapping["1101"] = "/";
-    // 1110 and 1111 are unused & ignored 
+    // null mappings for 1110 and 1111; unused
+    mapping["1110"] = "";
+    mapping["1111"] = "";
 }
 
 

@@ -25,7 +25,7 @@ void Chromosome::setGeneticAlgo(GeneticAlgo* ga) {
 }
 
 void Chromosome::getRandomBits() {
-    for (int i = 0; i < CHROMOSOME_LEN; i++) {
+    for (int i = 0; i < CHROMOSOME_LEN - 1; i++) {
         int x = rand() % 2;
         m_bits += to_string(x);
     }
@@ -90,8 +90,8 @@ void Chromosome::calcFitness() {
 
     // exit if we perfectly hit the target 
     if (accum - TARGET == 0) {
-        m_fitness = 9999;
-        m_ga->done = true;
+        m_fitness = PERFECT_FITNESS;
+        return;
     }
     m_fitness = 1.0 / abs(accum - TARGET);
     cout << "fitness: " << m_fitness << endl;
@@ -104,11 +104,10 @@ char inverted(char c) {
 
 void Chromosome::crossover(string& child1, string& child2) {
     int crossChance = rand() % 100;
-    crossChance = 100;
     if (crossChance < CROSSOVER_RATE) {
         int x = rand() % CHROMOSOME_LEN;
-        child1 = child1.substr(0, x) + child2.substr(x + 1);
-        child2 = child2.substr(0, x) + child1.substr(x + 1);
+        child1 = child1.substr(0, x) + child2.substr(x);
+        child2 = child2.substr(0, x) + child1.substr(x);
     }
 }
 
@@ -140,6 +139,16 @@ string Chromosome::rouletteSelect(double totalFitness, Chromosome c_arr[], int l
     }
     cerr << "Error with roulette select, should not reach this." << endl;
     return "";
+}
+
+
+void Chromosome::decode() {
+    string res = "";
+    for (int i = 0; i < CHROMOSOME_LEN; i += GENE_LEN) {
+        res += m_ga->mapping[m_bits.substr(i, GENE_LEN)] + " ";
+    }
+
+    cout << res << endl;
 }
 
 
